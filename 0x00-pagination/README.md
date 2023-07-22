@@ -1,4 +1,4 @@
-## 0x00. Pagination
+# 0x00. Pagination
 Back-end
 
 + By Emmanuel Turlay, Staff Software Engineer at Cruise
