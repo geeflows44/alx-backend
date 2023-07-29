@@ -13,7 +13,7 @@ Jul 12, 2022
 
 Jul 16, 2022
 
-     *you're done with 0% of tasks.
+        * you're done with 0% of tasks.
 + An auto review will be launched at the deadline
 
 ### In a nutshell...
