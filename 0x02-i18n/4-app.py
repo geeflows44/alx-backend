@@ -1,42 +1,47 @@
 #!/usr/bin/env python3
-"""the babel instance module"""
-
+"""
+Flask app
+"""
+from flask import (
+    Flask,
+    render_template,
+    request
+)
 from flask_babel import Babel
-from flask import Flask, render_template, request
 
 
-app = Flask(__name__)
-babel = Babel(app)
-
-
-class Config:
-    """configuration class for babel"""
+class Config(object):
+    """
+    Configuration for Babel
+    """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
+app = Flask(__name__)
 app.config.from_object(Config)
+babel = Babel(app)
 
 
 @babel.localeselector
 def get_locale():
-    """Use request.accept_languages to determine the best
-    match with our supported languages"""
-    locale = request.args.get("locale", None)
-    if locale is not None and locale in app.config["LANGUAGES"]:
-        print(locale)
-        return locale
-    return request.accept_languages.best_match(app.config["LANGUAGES"])
-
-
-@app.route('/', methods=["GET"], strict_slashes=False)
-def hello():
     """
-    hello.
+    Select and return best language match based on supported languages
+    """
+    loc = request.args.get('locale')
+    if loc in app.config['LANGUAGES']:
+        return loc
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
+
+
+@app.route('/', strict_slashes=False)
+def index() -> str:
+    """
+    Handles / route
     """
     return render_template('4-index.html')
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(port="5000", host="0.0.0.0", debug=True)
