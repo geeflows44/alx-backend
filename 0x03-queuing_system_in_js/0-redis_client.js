@@ -1,11 +1,14 @@
-import redis from 'redis';
+import { createClient } from 'redis';
 
-// this creates a new client
-const client = redis.createClient(); 
-// By default redis.createClient() will use 127.0.0.1 and port 6379
+function redisConnect() {
+  const client = createClient();
 
-// listen for the connect event to see whether we successfully connected to the redis-server
-client.on('connect', () => console.log('Redis client connected to the server'));
+  client.on('connect', function() {
+    console.log('Redis client connected to the server');
+  }).on('error', (err) => {
+    console.log(`Redis client not connected to the server: ${err}`);
+  });
 
-// listen for the error event tocheck if we failed to connect to the redis-server
-client.on('error', (err) => console.error(`Redis client not connected to the server: ${err.message}`));
+};
+
+redisConnect();
